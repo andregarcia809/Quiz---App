@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <link rel="stylesheet" type="text/css" href="css/style.css">
+  <title>Quiz</title>
+</head>
+
+<body>
+  <div class="app">
+    <div class="container">
+      <div class="jabQuiz">
+        <div class="jabQuiz__question-box">
+          <h1 class="jabQuiz__question">Who is the first president of the united states?</h1>
+          <p class="jabQuiz__tracker">1 of 7</p>
+          <div class="progress__container">
+            <div class="progress__bar"></div>
+          </div>
+          <p class="jabQuiz__tagline">Pick your option below!</p>
+        </div>
+        <div class="jabQuiz__choices-box">
+          <ul class="jabQuiz__choices">
+            <li class="jabQuiz__choice">
+              <input type="radio" name="choice" class="jabQuiz__input" id="choice0">
+              <label for="choice0" class="jabQuiz__label">
+                <i></i>
+                Martin Luther King
+              </label>
+            </li>
+            <li class="jabQuiz__choice">
+              <input type="radio" name="choice" class="jabQuiz__input" id="choice1" checked>
+              <label for="choice1" class="jabQuiz__label">
+                <i></i>
+                Michae Jackdon
+              </label>
+            </li>
+            <li class="jabQuiz__choice">
+              <input type="radio" name="choice" class="jabQuiz__input" id="choice2">
+              <label for="choice2" class="jabQuiz__label">
+                <i></i>
+                Lebron James
+              </label>
+            </li>
+            <li class="jabQuiz__choice">
+              <input type="radio" name="choice" class="jabQuiz__input" id="choice3">
+              <label for="choice3" class="jabQuiz__label">
+                <i></i>
+                Brendan Eich
+              </label>
+            </li>
+          </ul>
+        </div>
+
+        <div class="jabQuiz__footer">
+          <button class="button button--bordered next">Next</button>
+          <button class="button button--bordered next">Restart</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <script src="js/app.js" type="module"></script>
+</body>
+
+</html>
