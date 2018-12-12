@@ -7,11 +7,11 @@ const App = (() => {
   const quizEl = document.querySelector('.jabQuiz');
   const quizQuestionEL = quizEl.querySelector('.jabQuiz__question');
   const trackerEL = quizEl.querySelector('.jabQuiz__tracker');
-  const taglineEl = quizEl.querySelector('jabQuiz__tagline');
+  const tagLineEl = quizEl.querySelector('.jabQuiz__tagline');
   const choicesEl = quizEl.querySelector('.jabQuiz__choices');
   const progressBarEl = quizEl.querySelector('.progress__bar');
   const nextBtnEL = quizEl.querySelector('.next');
-  const restartBtn = quizEl.querySelector('.restart');
+  const restartBtnEl = quizEl.querySelector('.restart');
 
   // Initialize Questions
   const q1 = new Question(
@@ -27,7 +27,7 @@ const App = (() => {
   const q3 = new Question(
     'What does Css stand for?',
     ['County Sheriff Services', 'Center Social Science', 'Cascading Sexy Sheets', 'Cascading Style Sheets'],
-    2
+    3
   )
   const q4 = new Question(
     'The full form of HTML is...',
@@ -35,12 +35,34 @@ const App = (() => {
     0
   )
   const q5 = new Question(
-    'console.log(tyoe of []), would return what?',
+    'console.log(type of []), would return what?',
     ['Array', 'NULL', 'String', 'Number', 'Object'],
     4
   )
 
   const quiz = new Quiz([q1, q2, q3, q4, q5]);
+
+  // Events Handlers
+  const listeners = _ => {
+    nextBtnEL.addEventListener('click', ( )=> {
+      const selectRadioEl = quizEl.querySelector('input[name="choice"]:checked');
+      if(selectRadioEl) { // Implement a feature that does something when users has not clicked on a choice
+        const key = Number(selectRadioEl.getAttribute('data-order'));
+        quiz.guess(key);
+        renderAll();
+      }
+    })
+
+    restartBtnEl.addEventListener('click', () => {
+      quiz.reset();
+      renderAll();
+      nextBtnEL.style.opacity = 1;
+      tagLineEl.innerHTML = 'Pick your option below';
+    })
+  }
+
+
+
 
   //sets inner value of elements
   const changeInnerText = (elem, text) => {
@@ -60,7 +82,7 @@ const App = (() => {
     currentChoices.forEach((element, index) => {
       markup += `
         <li class="jabQuiz__choice">
-          <input type="radio" name="choice" class="jabQuiz__input" id="choice${index}">
+          <input type="radio" name="choice" class="jabQuiz__input" data-order="${index}"id="choice${index}">
           <label for="choice${index}" class="jabQuiz__label">
             <i></i>
             <span>${element}</span
@@ -93,6 +115,18 @@ const App = (() => {
     }, 3)
   }
 
+  //render EndScreen
+  const rederEndScreend = _ => {
+    changeInnerText(quizQuestionEL, 'Great Job');
+    console.log(quizQuestionEL)
+    changeInnerText(trackerEL, 'Complete');
+    console.log(trackerEL)
+    changeInnerText(tagLineEl, `Your score is: ${getPercentage(quiz.score, quiz.question.length)}%`);
+    console.log(tagLineEl)
+    nextBtnEL.style.opacity = 0;
+    renderProgressBAr();
+  }
+
   const renderProgressBAr = _ => {
     // width
     const currentWidth = getPercentage(quiz.currentIndex, quiz.question.length)
@@ -100,10 +134,9 @@ const App = (() => {
     lauch(0, currentWidth);
   }
 
-  renderTracker()
   const renderAll = _ => {
     if (quiz.hasEnded()) {
-      //render EndScreen
+      rederEndScreend();
     } else {
       renderQuestion();
       renderChoicesElements();
@@ -111,9 +144,13 @@ const App = (() => {
       renderProgressBAr();
     }
   }
+
+  //Global Scope only(Acces has been given)
   return {
-    renderAll: renderAll
+    renderAll: renderAll,
+    listeners: listeners
   }
 })();
 
 App.renderAll();
+App.listeners();
